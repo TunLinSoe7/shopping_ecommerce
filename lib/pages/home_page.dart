@@ -44,14 +44,14 @@ class HomePage extends StatelessWidget {
             Selector<HomePageProvider,List<ProductVO>?>(
               selector: (_ , provider ) =>provider.products,
               builder: (BuildContext context, List<ProductVO>? value, Widget? child) {
-                final pageIndex = Provider.of<HomePageProvider>(context);
+                final provider = Provider.of<HomePageProvider>(context);
                 return Column(
                   children: [
                     ///promo slider widget
-                    PromoSliderWidget(pageIndex: pageIndex,value: value,),
+                    PromoSliderWidget(provider: provider),
                     const SizedBox(height: kDefaultSize,),
                     ///SmoothPageIndicatorWidget
-                    SmoothPageIndicatorWidget(pageIndex: pageIndex,value: value,),
+                    SmoothPageIndicatorWidget(pageIndex: provider,value: value,),
                     /// Categories
                     const HorizontalTextWidget(title: kTopCategoriesText,trailing: Text(kSeeAllText),),
 
@@ -59,14 +59,14 @@ class HomePage extends StatelessWidget {
                       builder: (BuildContext context, HomePageProvider value, Widget? child){
                         return SizedBox(height: kPAndM40S,child: ListView.builder(
                           itemBuilder: (_,index){
-                            return CategoryWidget(pageIndex: pageIndex, value: value,index: index,);
-                          },itemCount: pageIndex.categories?.length,scrollDirection: Axis.horizontal,),);
+                            return CategoryWidget(provider: provider,index: index,);
+                          },itemCount: provider.categories?.length,scrollDirection: Axis.horizontal,),);
                       }
                     ),
                     const HorizontalTextWidget(title: 'Hot Sales',trailing: Text('See all'),),
                     Consumer<HomePageProvider>(
                       builder: (BuildContext context, HomePageProvider value, Widget? child) {
-                        if(value.isLoading){
+                        if(value.productsByCategory == null){
                           return const CircularProgressIndicator();
                         }else if(value.productsByCategory !=null && value.productsByCategory!.isNotEmpty){
                           return SizedBox(

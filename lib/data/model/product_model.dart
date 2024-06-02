@@ -5,4 +5,6 @@ abstract class ProductModel{
   Future<List<String>?> getAllCategories();
   Future<List<ProductVO>?> getProductByCategory(String categoryName);
   Future<ProductVO?> getProductDetail(int id);
+  Stream<List<ProductVO>?> getAllProductFromDatabase();
+  Stream<List<ProductVO>?> getProductVOFromDatabase(String categoryName);
 }

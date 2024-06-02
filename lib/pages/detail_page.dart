@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_zila/providers/detail_page_provider.dart';
 import 'package:shop_zila/widgets/horizontal_text_widget.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key, required this.id});
@@ -58,9 +59,11 @@ class ProductDetailItemViews extends StatelessWidget {
             SizedBox(
               height: 220,
               width: double.infinity,
-              child: CachedNetworkImage(
-                height: 220,
-                imageUrl: '${value.productDetail?.image}',fit: BoxFit.contain,),
+              child: InstaImageViewer(
+                child: CachedNetworkImage(
+                  height: 220,
+                  imageUrl: '${value.productDetail?.image}',fit: BoxFit.contain,),
+              ),
             ),
             const HorizontalTextWidget(title: 'Free Shipping',style: TextStyle(
               color: Colors.cyan,

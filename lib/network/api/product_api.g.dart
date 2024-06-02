@@ -106,13 +106,13 @@ class _ProductApi implements ProductApi {
   }
 
   @override
-  Future<ProductVO> getProductDetail(int id) async {
+  Future<ProductVO?> getProductDetail(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ProductVO>(Options(
+        .fetch<Map<String, dynamic>?>(_setStreamType<ProductVO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -128,7 +128,8 @@ class _ProductApi implements ProductApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ProductVO.fromJson(_result.data!);
+    final value =
+        _result.data == null ? null : ProductVO.fromJson(_result.data!);
     return value;
   }
 

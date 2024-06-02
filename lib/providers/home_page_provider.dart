@@ -32,7 +32,8 @@ class HomePageProvider extends ChangeNotifier {
   }
 
   HomePageProvider() {
-    _productModel.getAllProduct().then((value) {
+    _productModel.getAllProduct();
+    _productModel.getAllProductFromDatabase().listen((value) {
       _products = value?.take(5).toList();
       notifyListeners();
     });
@@ -41,17 +42,17 @@ class HomePageProvider extends ChangeNotifier {
 
   Future<void> fetchProductByCategory(String categoryName)async{
     isLoading = true;
-    notifyListeners();
     try {
-      await _productModel.getProductByCategory(categoryName).then((value) {
-            _productByCategory = value;
-          });
+      await _productModel.getProductByCategory(categoryName);
+      var products = await _productModel.getProductVOFromDatabase(categoryName).first;
+      _productByCategory = products;
     } catch (e) {
       print(e);
     } finally {
       isLoading = false;
       notifyListeners();
     }
+    notifyListeners();
   }
 
   Future<void> fetchAllCategory() async {

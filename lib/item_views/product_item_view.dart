@@ -15,7 +15,7 @@ class ProductItemView extends StatelessWidget{
       ),
       width: double.infinity,
       height: 100,
-      child: CachedNetworkImage(imageUrl: imageUrl),
+      child: CachedNetworkImage(imageUrl: imageUrl,placeholder: (_,url)=>const Center(child: CircularProgressIndicator(color: Colors.red,),),),
     );
   }
 
